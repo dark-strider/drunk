@@ -1,0 +1,31 @@
+= simple_form_for @place, validate: true, html: { class: 'form-horizontal' } do |f|
+  = f.input :place_type_ids, collection: @place_types,
+                             include_blank: true,
+                             input_html: { multiple: true }
+
+  = f.input :name, input_html: { class: 'span3', autofocus: true }
+  = f.input :opened_in, collection: 1950..2013
+  = f.input :skype, input_html: { class: 'span3', maxlength: 25 }
+  = f.input :phone, input_html: { class: 'span3', maxlength: 25 }
+  = f.input :about, as: :text, 
+                    input_html: { rows: 5,
+                                  class: 'span3',
+                                  maxlength: 2000 }
+
+  h5 Адрес:
+  = f.simple_fields_for :location do |l|
+    = l.input :country, collection: @countries.map(&:name),
+                        include_blank: false,
+                        input_html: { id: 'country' }
+    = l.input :city, collection: @cities.map(&:name),
+                     include_blank: false,
+                     input_html: { id: 'city' }
+    = l.input :street, input_html: { id: 'street',
+                                     class: 'span3' }
+    = l.hidden_field :coordinates
+
+    javascript:
+      var model = 'place';
+    == render '_forms/map_form', data: @marker, resource: :form, map_container: 'map_form_container', map_class: 'map_form'
+
+  == render '_forms/submit', f:f, t:'запись о заведении'

@@ -1,0 +1,17 @@
+div class="photo #{size}"
+  a class='fancybox' rel='gallery' href="#{photo.image_url}" data-title-id="#{photo.id}"
+    = image_tag photo.image_url(size) if photo.image?
+
+  - if photo.total_comments != 0
+    div class='total_comments' [#{photo.total_comments}]
+
+  - if can? :destroy, photo
+    i = link_to '', photo, method: :delete, confirm: 'Уверены..?', class: 'icon-remove'
+
+  div class='select_simple_comments'
+    == render 'comments/simple_index', photo: photo
+
+div id="#{photo.id}" class='hidden'
+  == render '_forms/likes_button', model: photo
+  - if photo.likers.exists?
+    == render '_forms/likers', model: photo

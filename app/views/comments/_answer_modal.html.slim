@@ -1,0 +1,13 @@
+div id='modal_container' class='modal'
+  div class='modal-header'
+    button type='button' class='close' data-dismiss='modal' ×
+    strong Ваш комментарий
+  div class='modal-body'
+    == render 'comments/form'
+
+  div class='modal-footer'
+    div id='send_comment' class='btn btn-success' Отправить
+    button data-dismiss='modal' class='btn btn-danger' Отмена
+
+  = content_for :scripts do
+    == render 'comments/uploader'

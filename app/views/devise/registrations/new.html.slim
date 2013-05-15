@@ -1,0 +1,32 @@
+h3 Регистрируйтесь
+
+= simple_form_for(resource, as: resource_name,
+                            url: registration_path(resource_name),
+                            validate: true,
+                            html: { class: 'form-horizontal' }) do |f|
+
+  = f.error_notification
+  / = devise_error_messages!
+  h5 Заполнив форму :
+  br
+
+  = f.input :email, validate: false,
+                    input_html: { required: true,
+                                  autofocus: true }
+  = f.input :name, input_html: { required: true,
+                                 maxlength: 40 }
+
+  - if f.object.password_required?
+    = f.input :password, input_html: { required: true }
+    = f.input :password_confirmation, validate: false, input_html: { required: true }
+
+  h5 или :
+  | Используя свой аккаунт 
+  == render 'devise/shared/services'
+  br
+  br
+  == render 'devise/registrations/license'
+  == render '_forms/submit_static', f:f, t:'Зарегистрироваться'
+
+br
+== render 'devise/shared/links'

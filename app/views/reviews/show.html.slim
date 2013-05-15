@@ -1,0 +1,15 @@
+div class='pull-right'
+  == render 'actions'
+  br
+  br
+  == render '_forms/likes', model: @review
+
+p = @review.content
+
+div class='attached' 
+  - if @photos.any?
+    div id='photos_container'
+      == render partial: 'photos/photo', collection: @photos, locals: { size: :normal }
+
+br
+== render 'comments/index'

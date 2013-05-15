@@ -1,0 +1,21 @@
+h5 Адрес:
+= f.simple_fields_for :location do |l|
+  = l.input :country, collection: Country.all.map(&:name),
+                      include_blank: true,
+                      input_html: { id: 'country' },
+                      validate: false
+  = l.input :city, collection: City.all.map(&:name),
+                   validate: false,
+                   include_blank: true,
+                   input_html: { id: 'city' }
+  = l.input :street, validate: false,
+                     input_html: { id: 'street',
+                                   class: 'span3' }
+  = l.hidden_field :coordinates, validate: false
+
+  javascript:
+    var model = 'user';
+  == render '_forms/map_form', data: @marker, resource: :form, map_container: 'map_form_container', map_class: 'map_form'
+
+br
+br

@@ -1,0 +1,10 @@
+= gmaps(markers: { data: data, options: { custom_infowindow_class: :infobox, list_container: :markers_list, do_clustering: true, clusterer_maxZoom: 14, draggable: true, randomize: true, max_random_distance: 0,raw: '{ animation: google.maps.Animation.DROP }' }}, map_options: { id:'map', container_class: map_container, class: map_class, minZoom: 3,  maxZoom: 18, raw: '{ disableDefaultUI: true, mapTypeControlOptions: { position: google.maps.ControlPosition.BOTTOM_LEFT, style: google.maps.MapTypeControlStyle.DROPDOWN_MENU }, zoomControlOptions: { style: google.maps.ZoomControlStyle.LARGE, position: google.maps.ControlPosition.LEFT_TOP }, panControl: false, panControlOptions: { position: google.maps.ControlPosition.LEFT_TOP } }'}, last_map: last)
+
+= content_for :scripts do
+  script src='/assets/gmaps4rails/custom/callback_#{resource}.js'
+  script src='/assets/gmaps4rails/custom/infobox.js'
+
+/ = gmaps(:map_options=>{:raw =>"{styles: myStyle}"}, :markers=>{ "data" => data, "list_container" => "markers_list" })
+/ |<script type="text/javascript" charset="utf-8">
+/   var myStyle = [ { featureType: "all", stylers: [{ "hue": "#D2F2F2" } ]} ];
+/ |</script>

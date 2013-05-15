@@ -1,0 +1,5 @@
+div class='likes'
+  - if current_user.liked?(model)
+    = unlike_for(model)
+  - else
+    = like_for(model)

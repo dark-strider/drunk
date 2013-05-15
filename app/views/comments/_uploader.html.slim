@@ -1,0 +1,82 @@
+|<script type='text/javascript'>
+  var token = $("meta[name='csrf-token']").attr('content');
+
+  $('#uploader_comment').pluploadQueue({
+    runtimes: 'html5,gears,silverlight,browserplus,flash',
+    url: '/photos',
+    max_file_size: '10mb',
+    multiple_queues: true,
+    multipart_params: {
+      "#{request_forgery_protection_token}": token,
+      "#{request.session_options[:key]}": "#{request.session_options[:id]}",
+      "photographic_class": "#{@comment.class}",
+      "photographic_id": "#{@comment.id}"
+    },
+    filters: [
+      {title: 'Images', extensions: 'jpg,jpeg,png'}
+    ],
+    preinit: {
+      Init: function(params) {
+        $('.plupload_start').hide();
+        $('.plupload_scroll .plupload_filelist').css({
+          'width': 'auto',
+          'height': '100px',
+          'overflow-y': 'scroll'
+        });
+        $('.plupload_droptext').css('line-height', '80px');
+        document.getElementById('uploader_comment_container').title=params.runtime;
+      }
+    },
+    init: {
+      FileUploaded: function(uploader, file, info) {
+        // eval(info['response']); // это для аяксовой передачи во вью.
+      },
+      StateChanged: function(uploader) {
+        if (uploader.files.length === uploader.total.uploaded) {
+          // $('form')[0].submit(); // До появления комментариев к фото.
+          $('#form_for_comment').submit();
+        }
+        else {
+          $('.plupload_buttons').css('display', 'inline');
+          $('.plupload_upload_status').css('display', 'inline');
+        }
+        
+        if (uploader.total.failed > 0) {
+          // 1. Показываем файлы которые загруженны.
+          // alert('Произошла ошибка. Не все файлы были загружены.\nВ очереди файлы которые удалось загрузить.\nПожалуйста добавьте незагруженные файлы заново и повторите.');
+          // $.each(uploader.files, function(i, file){
+          //   if (file.status == plupload.FAILED) {
+          //     uploader.removeFile(file);
+          //   }
+          // });
+          
+          // 2. Очищаем очередь.
+          // alert('Произошла ошибка. Файлы не были загружены.\nВаша очередь загрузки была очищена.\nПожалуйста добавьте файлы заново и повторите.');
+          // uploader.splice();
+          // uploader.refresh();
+          
+          // 3. Все равно сабмитим. Чтобы не плодить левых фоток, если человек после загрузки одной фото отказывается создавать дальше сам коммент.
+          alert('Произошла ошибка.\nНе все файлы были успешно загружены.\nНо вы можете присоединить незагруженные\nфайлы к вашему следующему комментарию.\nИзвините за неудобство...');
+          // $('form')[0].submit();
+          $('#form_for_comment').submit();
+        }
+      }
+    }
+  });
+
+  var loader = $("#uploader_comment").pluploadQueue();
+
+  $('#send_comment').click(function() {
+    var size = $('#form_for_comment').find('#comment_content').val().length;
+    if (size != 0) {
+      if (size <= 500) {
+        loader.start();
+      } else {
+        alert('Длина комментария не должна превышать 500 символов. У вас: '+ size +'.');
+      }
+    }
+    else {
+      $('#form_for_comment').find('#comment_content').attr('placeholder', 'Сначала введите комментарий ...').blur();
+    }
+  });
+|</script>

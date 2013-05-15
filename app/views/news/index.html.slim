@@ -1,0 +1,17 @@
+h3 Новости #{@place.name}
+br
+
+table class='table table-condensed'
+  - @news.each do |news|
+    tr
+      td = news.title
+      td = news.category
+      td
+        = link_to 'Show', place_news_path(@place, news)
+        |  - 
+        = link_to 'Edit', edit_place_news_path(@place, news)
+        |  - 
+        = link_to 'Destroy', place_news_path(@place, news), method: :delete, confirm: 'Уверены..?'
+
+- if can? :create, @place.news.build
+  = link_to 'Добавить новость', new_place_news_path, class: 'btn btn-success'

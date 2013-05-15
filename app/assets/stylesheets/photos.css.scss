@@ -1,0 +1,42 @@
+#photos_container {
+  overflow: hidden;
+
+  .photo {
+    margin: 7px;
+    margin-bottom: 10px;
+    float: left;
+    
+    img {
+      padding: 1px;
+      border: 2px solid #d8d8d8;
+    }
+
+    .total_comments {
+      float: right;
+      margin-top: -6px;
+      margin-left: 1px;
+      font-size:12px;
+      font-weight:700;
+      color:#542437;
+    }
+
+    .icon-remove {
+      float: left;
+    }
+  }
+
+  .small {
+    // max-width: 60px;
+    height: 40px;
+  }
+  
+  .normal {
+    // max-width: 120px;
+    height: 100px;
+  }
+
+  .large {
+    max-width: 300px;
+    max-height: 300px;
+  }
+}

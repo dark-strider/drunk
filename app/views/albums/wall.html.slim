@@ -1,0 +1,30 @@
+div id='album_title'
+  - if @albumable.class.to_s == 'User'
+    | Прикрепленные фото
+  - else
+    | На стене
+
+- if @reviews_photos.any?
+  h5 Отзывы
+  div id='photos_container'
+    == render partial: 'photos/photo', collection: @reviews_photos, locals: { size: :normal }
+
+- if @comments_photos.any?
+  h5 Комментарии
+  div id='photos_container'
+    == render partial: 'photos/photo', collection: @comments_photos, locals: { size: :normal }
+
+/ - if @events_albums_photos.any?
+/   h5 Дринки
+/   div id='photos_container'
+/     == render partial: 'photos/photo', collection: @events_albums_photos, locals: { size: :normal }
+
+/ - if @places_albums_photos.any?
+/   h5 Заведения
+/   div id='photos_container'
+/     == render partial: 'photos/photo', collection: @places_albums_photos, locals: { size: :normal }
+
+- if @user_photos.any?
+  h5 Все фото
+  div id='photos_container'
+    == render partial: 'photos/photo', collection: @user_photos, locals: { size: :small }

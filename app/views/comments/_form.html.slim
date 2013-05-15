@@ -1,0 +1,20 @@
+= simple_form_for @comment, html: { id: 'form_for_comment' } do |f|
+
+  a id='toggle_uploader_comment'
+    = image_tag 'attach_image.png', title: 'Прикрепить фото', size: '24x24'
+
+  - if @commentable
+    == render '_forms/commentable', f:f, commentable: @commentable
+
+  = f.hidden_field :id, value: @comment.id
+  = f.input :parent, as: :hidden, input_html: { id: 'parent' }
+  = f.input :content, as: :text,
+                      label: false,
+                      input_html: { autofocus: true,
+                                    rows: 4,
+                                    class: 'span5',
+                                    maxlength: 500 }
+  div id='uploader_comment'
+    p Ваш браузер не поддерживает: html5 и flash.
+
+  = f.button :submit, class: 'hide'

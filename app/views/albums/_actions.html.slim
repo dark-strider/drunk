@@ -1,0 +1,5 @@
+= link_to 'Редактировать', [:edit, @albumable, @album]
+|  - 
+= link_to 'Удалить', [@albumable, @album], method: :delete, confirm: 'Уверены..?'
+|  - 
+= link_to 'Назад', [@albumable, :albums]

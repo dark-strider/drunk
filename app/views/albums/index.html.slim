@@ -1,0 +1,32 @@
+h4 Фотоальбомы
+
+div id='albums_container'
+  - @albums.each do |album|
+    div class='album_preview'
+      - if album.photos.any?
+        = link_to (image_tag album.photos.last.image_url(:large)), [@albumable, album]
+      - else
+        = link_to (image_tag nil), [@albumable, album]
+        
+      div class='title'
+        = album.name
+        div class='total'
+          | [#{album.total_photos}]
+
+  div class='album_preview'
+    - if @wall_preview
+      = link_to (image_tag @wall_preview.image_url(:large)), [:wall, @albumable, :albums]
+    - else
+      = link_to (image_tag nil), [:wall, @albumable, :albums]
+       
+    div class='title' На стене
+
+br
+/ - if @latest_photos.any?
+/   h4 Последние фото
+/   br
+/   div id='photos_container'
+/     == render partial: 'photos/photo', collection: @latest_photos, locals: { size: :normal }
+
+br
+= link_to 'Добавить альбом', [:new, @albumable, :album], class: 'btn btn-success'

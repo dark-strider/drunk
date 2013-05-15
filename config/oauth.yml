@@ -1,0 +1,20 @@
+development: &defaults
+  :twitter:
+    :id: NRGPvo2WKOBwDbK0q59XYQ
+    :secret: oSBWH5ZdfyYgr8ZVbhXwdp1miXXSyP7RBS35EBjEluc
+
+  :facebook:
+    :id: 460697190630615
+    :secret: d1acb6559ab480a77c35a11166072dca
+    :scope: 'email,user_about_me,user_birthday,user_hometown,user_location,user_website'
+
+  :vkontakte:
+    :id: 3085930
+    :secret: LJsgd7gtHdJWOW85ZtIq
+    :scope: 'notify,status'
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

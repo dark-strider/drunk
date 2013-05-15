@@ -1,0 +1,43 @@
+h4 Мои дринки (#{@user.total_create_events})
+
+table class='table table-condensed'
+  - @events.each do |event|
+    tr
+      td = link_to event.name, event
+      td
+        = link_to 'Edit', edit_event_path(event)
+        |  - 
+        = link_to 'Destroy', event, method: :delete, confirm: 'Уверены..?'
+
+= link_to 'Поставить дринк', new_event_path, class: 'btn btn-success'
+
+br
+br
+
+h4 Пойду (#{@user.total_join_events})
+
+table class='table table-condensed'
+  - @member_of_events.each do |event|
+    tr
+      td = link_to event.name, event
+
+
+- if @received_invites.exists?
+  h4 Приглашен (#{@received_invites.count})
+
+  table class='table table-condensed'
+    tr
+      td Пригласил
+      td Куда
+      td Статус
+      td 
+    - @received_invites.each do |invite|
+      tr
+        td= link_to @user.name, @user
+        td= link_to invite.event.name, invite.event
+        td= Invite::STATUS[invite.status.to_sym]
+        - if can? :accept, invite
+          td
+            = link_to 'Посмотреть ', invite
+            = link_to '- Принять ', invite_accept_path(invite)
+            = link_to '- Отказаться', invite_refuse_path(invite)

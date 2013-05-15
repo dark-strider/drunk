@@ -1,0 +1,50 @@
+h4 Редактирование профиля
+
+= simple_form_for(resource, as: resource_name,
+                            url: registration_path(resource_name),
+                            validate: true,
+                            html: { method: :put, multipart: true, class: 'form-horizontal' }) do |f|
+  = f.error_notification
+
+  = image_tag resource.avatar_url(:normal)
+  = f.input :avatar, as: :file
+  = f.hidden_field :avatar_cache
+
+  = f.input :email, as: :email, 
+                    input_html: { required: true }
+  = f.input :name, input_html: { required: true,
+                                 maxlength: 40 }
+  = f.input :birthday
+  = f.input :gender, collection: User::GENDERS,
+                     include_blank: false
+  = f.input :skype, input_html: { maxlength: 25 }
+  = f.input :phone, input_html: { maxlength: 25 }
+  = f.input :about, as: :text, 
+                    input_html: { rows: 5,
+                                  cols: 30,
+                                  maxlength: 1000 }
+  = f.input :hobbies, as: :text, 
+                      input_html: { rows: 5,
+                                    cols: 30,
+                                    maxlength: 1000 }
+  == render 'services'
+  == render 'address', f:f
+
+  == render 'devise/registrations/password' if !f.object.my_password?
+  = f.input :password, required: false,
+                       autocomplete: 'off',
+                       label: 'Новый пароль',
+                       placeholder: 'Заполняйте при смене пароля...'
+  = f.input :password_confirmation, required: false,
+                                    label: false,
+                                    placeholder: 'Повторите пароль...'
+  
+  == render '_forms/submit_static', f:f, t:'Обновить профиль'
+
+= link_to 'Назад', :back, class: 'btn'
+br
+= link_to 'Удалить аккаунт', registration_path(resource_name),
+                             method: :delete,
+                             confirm: 'Вы уверены.? Ваши данные будут безвозвратно утеряны.',
+                             class: 'btn btn-inverse btn-mini pull-right'
+br

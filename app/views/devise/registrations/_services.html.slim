@@ -1,0 +1,22 @@
+h5 Подключенные сервисы:
+
+div id='services_container'
+  - if @services.any?
+    - @services.each do |service| 
+      div class='service'
+        = image_tag "social_network/#{service.provider}.png", title:"#{service.provider}", size:'48x48'
+        ul
+          li = service.name
+          - if service.email != '' 
+            li = service.email
+          li = link_to 'Посмотреть профиль', service.url
+          - if session[:service] == service.provider
+            li Тут вы вошли
+          - else
+            - @services.count == 1 ? @msg = ' Удаление последнего сервиса может лишить вас возможности доступа к аккаунту, если вы не знаете (или не указали в настройках) локальный пароль доступа.' : @msg = ''
+            li = link_to 'Удалить сервис', service, confirm:'Вы уверенны.?' + @msg, method: :delete
+    br
+  br
+  b Присоединить аккаунты: 
+  == render '/devise/shared/services'
+  br

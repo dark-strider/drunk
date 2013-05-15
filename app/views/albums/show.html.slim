@@ -1,0 +1,17 @@
+div class='pull-right'
+  == render 'actions'
+
+div id='album_title'
+  = @album.name
+
+a id='toggle_uploader_album'
+  = image_tag 'attach_image.png', title: 'Добавить фото', size: '24x24'
+
+div id='uploader_album'
+  p Ваш браузер не поддерживает технологию: html5, flash, gears, silverlight или browserplus.
+
+div id='photos_container'
+  == render partial: 'photos/photo', collection: @photos, locals: { size: :normal }
+
+= content_for :scripts do
+  == render 'albums/uploader'

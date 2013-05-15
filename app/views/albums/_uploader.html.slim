@@ -1,0 +1,61 @@
+|<script type='text/javascript'>
+  var token = $("meta[name='csrf-token']").attr('content');
+
+  $('#uploader_album').pluploadQueue({
+    runtimes: 'html5,gears,silverlight,browserplus,flash',
+    url: '/photos',
+    max_file_size: '5mb',
+    multiple_queues: true,
+    multipart_params: {
+      "#{request_forgery_protection_token}": token,
+      "#{request.session_options[:key]}": "#{request.session_options[:id]}",
+      "photographic_class": "#{@album.class}",
+      "photographic_id": "#{@album.id}"
+    },
+    filters: [
+      {title: 'Images', extensions: 'jpg,jpeg,png'}
+    ],
+    preinit: {
+      Init: function(params) {
+        $('.plupload_scroll .plupload_filelist').css({
+          'width': 'auto',
+          'height': '150px',
+          'overflow-y': 'scroll'
+        });
+        $('li.plupload_droptext').css('line-height', '110px');
+        
+        document.getElementById('uploader_album_container').title=params.runtime;
+        $('.plupload_header_title').html('Добавьте в альбом новые фото');
+        $('.plupload_header_text').html('Выберите фото и нажмите кнопку "Загрузить"');
+      }
+    },
+    init: {
+      FileUploaded: function(uploader, file, info) {
+        eval(info['response']); // это для аяксовой передачи во вью.
+      },
+      StateChanged: function(uploader) {
+        if (uploader.files.length != uploader.total.uploaded) {
+          $('.plupload_buttons').css('display', 'inline');
+          $('.plupload_upload_status').css('display', 'inline');
+        }
+        
+        if (uploader.total.failed > 0) {
+          // 1. Показываем файлы которые загруженны.
+          
+          alert('Произошла ошибка. Не все файлы были загружены.\nВ очереди файлы которые не удалось загрузить.\nПожалуйста добавьте незагруженные файлы заново и повторите.');
+          $.each(uploader.files, function(i, file){
+            if (file.status == plupload.DONE) {
+              uploader.removeFile(file);
+            }
+          });
+          // location.reload();
+          
+          // 2. Очищаем очередь.
+          // alert('Произошла ошибка. Файлы не были загружены.\nВаша очередь загрузки была очищена.\nПожалуйста добавьте файлы заново и повторите.');
+          // uploader.splice();
+          // uploader.refresh();
+        }
+      }
+    }
+  });
+|</script>

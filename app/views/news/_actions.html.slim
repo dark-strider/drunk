@@ -1,0 +1,5 @@
+= link_to 'Редактировать', edit_place_news_path(@place, @news) if can? :update, @news
+|  - 
+= link_to 'Удалить', place_news_path(@place, @news), method: :delete, confirm: 'Уверены..?' if can? :destroy, @news
+|  - 
+= link_to 'Назад', place_news_index_path

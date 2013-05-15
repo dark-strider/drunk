@@ -1,0 +1,83 @@
+|<script type='text/javascript'>
+  var token = $("meta[name='csrf-token']").attr('content');
+
+  $('#uploader_review').pluploadQueue({
+    runtimes: 'html5,gears,silverlight,browserplus,flash',
+    url: '/photos',
+    max_file_size: '10mb',
+    multiple_queues: true,
+    multipart_params: {
+      "#{request_forgery_protection_token}": token,
+      "#{request.session_options[:key]}": "#{request.session_options[:id]}",
+      "photographic_class": "#{@review.class}",
+      "photographic_id": "#{@review.id}"
+    },
+    filters: [
+      {title: 'Images', extensions: 'jpg,jpeg,png'}
+    ],
+    preinit: {
+      Init: function(params) {
+        $('.plupload_start').hide();
+        $('.plupload_scroll .plupload_filelist').css({
+          'width': 'auto',
+          'height': '150px',
+          'overflow-y': 'scroll'
+        });
+        $('.plupload_droptext').css('line-height', '110px');
+        document.getElementById('uploader_review_container').title=params.runtime;
+        $('.plupload_header_text').html('Выберите фото и они прицепятся к вашему отзыву.');
+      }
+    },
+    init: {
+      FileUploaded: function(uploader, file, info) {
+        // eval(info['response']); // это для аяксовой передачи во вью.
+      },
+      StateChanged: function(uploader) {
+        if (uploader.files.length === uploader.total.uploaded) {
+          $('#form_for_review').submit();
+        }
+        else {
+          $('.plupload_buttons').css('display', 'inline');
+          $('.plupload_upload_status').css('display', 'inline');
+        }
+        
+        if (uploader.total.failed > 0) {
+          // 1. Показываем файлы которые загруженны.
+          // alert('Произошла ошибка. Не все файлы были загружены.\nВ очереди файлы которые удалось загрузить.\nПожалуйста добавьте незагруженные файлы заново и повторите.');
+          // $.each(uploader.files, function(i, file){
+          //   if (file.status == plupload.FAILED) {
+          //     uploader.removeFile(file);
+          //   }
+          // });
+          
+          // 2. Очищаем очередь.
+          // alert('Произошла ошибка. Файлы не были загружены.\nВаша очередь загрузки была очищена.\nПожалуйста добавьте файлы заново и повторите.');
+          // uploader.splice();
+          // uploader.refresh();
+          
+          // 3. Все равно сабмитим. Чтобы не плодить левых фоток, если человек после загрузки одной фото отказывается создавать дальше сам коммент.
+          alert('Произошла ошибка.\nНе все файлы были успешно загружены.\nНо вы можете присоединить незагруженные\nфайлы при редактировании вашего отзыва.\nИзвините за неудобство...');
+          $('#form_for_review').submit();
+        }
+      }
+    }
+  });
+
+  var loader = $("#uploader_review").pluploadQueue();
+
+  $('#send_review').click(function() {
+    var size_content = $('#form_for_review').find('#review_content').val().length;
+    
+    if (size_content != 0) {
+      if (size_content <= 1000) {
+        loader.start();
+      }
+      else {
+        alert('Длина отзыва не должна превышать 1000 символов. У вас: '+ size_content +'.');
+      }
+    }
+    else {
+      $('#form_for_review').find('#review_content').attr('placeholder', 'Сначала введите отзыв ...').blur();
+    }
+  });
+|</script>

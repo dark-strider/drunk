@@ -1,0 +1,5 @@
+= link_to 'Редактировать', edit_place_review_path(@place, @review) if can? :update, @review
+|  - 
+= link_to 'Удалить', place_review_path(@place, @review), method: :delete, confirm: 'Уверены..?' if can? :destroy, @review
+|  - 
+= link_to 'Назад', place_reviews_path

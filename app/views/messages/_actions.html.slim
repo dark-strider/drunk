@@ -1,0 +1,5 @@
+= link_to 'Редактировать', edit_user_message_path(@user, @message) if can? :update, @message
+|  - 
+= link_to 'Удалить', user_message_path(@user, @message), method: :delete, confirm: 'Уверены..?' if can? :destroy, @message
+|  - 
+= link_to 'Назад', user_messages_path

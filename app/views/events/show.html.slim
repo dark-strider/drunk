@@ -1,0 +1,81 @@
+== render 'share'
+
+div class='pull-right'
+  == render 'actions'
+  br
+  br
+  == render '_forms/likes_dislikes', model: @event
+
+h3 = @event.name
+
+// joinable
+- if @can_join
+  = link_to 'Присоединиться', join_event_path(@event), class: 'btn btn-success'
+- if @can_unjoin
+  = link_to 'Отказаться от участия', unjoin_event_path(@event), class: 'btn btn-danger'
+|  
+// inviteable
+- if @can_invite
+  = link_to 'Разослать приглашения', new_invite_path(event: @event), class: 'btn btn-primary'
+br
+br
+
+| Статус дринка: 
+b = Event::CONDITION[@event.condition.to_sym]
+
+br
+| Где: 
+b = link_to @event.place_name, place_path(@event.place)
+br
+| Когда: 
+b = l @event.begin_at.getlocal.to_date, format: :long
+|  ( #{l @event.begin_at.getlocal, format: :time} - #{l @event.end_at.getlocal, format: :time} )
+
+br
+| Организатор: 
+b = link_to @event.user.name, user_path(@event.user)
+
+br
+= "Skype: #{@event.skype}"
+br
+= "Тел. #{@event.phone}"
+
+br
+h4 О дринке
+= @event.about
+br
+br
+= link_to "Фотоальбомы [#{@event.total_albums}]", [@event, :albums], class: 'btn btn-info'
+br
+br
+
+h4 Участники
+- if @members.exists?
+  table class='table table-condensed'
+    - @members.each do |user|
+      tr
+        td = link_to user.name, user
+- else
+  | Пока никого нет...
+  br
+
+- if @invites.exists?
+  h4 Приглашены
+  table class='table table-condensed'
+    tr
+      td Пригласил
+      td Кого
+      td Статус
+      td 
+    - @invites.each do |invite|
+      tr
+        td= link_to invite.user.name, invite.user
+        td= link_to invite.whom.name, invite.whom
+        td= Invite::STATUS[invite.status.to_sym]
+        td 
+          = link_to 'Ответить ', invite if can? :accept, invite
+          = link_to '- Редактировать ', edit_invite_path(invite) if can? :update, invite
+          = link_to '- Отозвать', invite, method: :delete, confirm: 'Уверены..?' if can? :destroy, invite
+
+br
+== render 'comments/index'

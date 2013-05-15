@@ -1,0 +1,22 @@
+h4 Друзья #{@user.name} [#{@user.total_friends}]
+
+table class='table table-condensed'
+  - @accepted.each do |friend|
+    tr
+      td = link_to friend.name, user_path(friend)
+      td
+        - if current_user.friend_with?(friend)
+          = link_to 'Поссориться', user_friend_path(friend, @user), method: :delete, confirm: 'Уверены..?'
+
+- if current_user == @user && @unaccepted.any?
+  br
+  h4 Не подтвержденные (#{@user.total_unaccepted_friends}):
+  table class='table table-condensed'
+    - @unaccepted.each do |friend|
+      tr
+        td = link_to friend.name, user_path(friend)
+        td
+          - if current_user.unaccepted_friend?(friend)
+            = link_to 'Принять', edit_user_friend_path(friend, @user)
+            |  - 
+          = link_to 'Удалить', user_friend_path(friend, @user), method: :delete, confirm: 'Уверены..?'

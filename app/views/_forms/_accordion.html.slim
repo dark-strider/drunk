@@ -1,0 +1,42 @@
+div class='accordion vertical'
+  - events.each do |event|
+    ul
+      li
+        input type='checkbox' id='checkbox-#{i}' name='checkbox-accordion'
+        label for='checkbox-#{i}'
+          = image_tag event.user.avatar_url(:small), title: event.user.name, class: 'avatar'
+          |  &nbsp;
+          = image_tag "gmaps4rails/confirm/#{event.condition}.gif", title: Event::CONDITION[event.condition.to_sym], class: 'confirm'
+          |  
+          = link_to event.name, event, class: 'label label-success'
+          span class='pull-right'
+            - if event.condition == 'live'
+              | окончание в #{l event.end_at.getlocal, format: :time}
+            - else
+              | #{l event.begin_at.getlocal, format: :no_year}
+            div class='members_count'
+              | участников - #{event.total_members}
+
+        div class='content'
+          div class='inner'
+            div class='links'
+              // joinable
+              - if event.can_join?(current_user)
+                = link_to 'Присоединиться', join_event_path(event), class: 'label label-important'
+              - if event.can_unjoin?(current_user)
+                = link_to 'Отказаться от участия', unjoin_event_path(event), class: 'label label-info'
+              |  &nbsp;
+
+              = link_to 'Перейти на страницу', event, class: 'label'
+
+            | Предложил встретиться #{link_to event.user.name, user_path(event.user)}.
+            br
+            | Участники: 
+            // inviteable
+            - if event.can_invite?(current_user)
+              = link_to 'пригласить еще..?', new_invite_path(event: event)
+            br
+            = link_to (image_tag event.user.avatar_url(:small), title: event.user.name, class: 'avatar'), user_path(event.user)
+            - event.members.each do |member|
+              = link_to (image_tag member.avatar_url(:small), title: member.name, class: 'avatar'), member
+    - i+=1

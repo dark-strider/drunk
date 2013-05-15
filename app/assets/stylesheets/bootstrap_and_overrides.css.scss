@@ -1,0 +1,39 @@
+// $iconSpritePath: asset-url('glyphicons-halflings.png', image);
+// $iconWhiteSpritePath: asset-url("glyphicons-halflings-white.png", image);
+
+$bodyBackground: #D2D1D0;
+$textColor: #444;
+$navbarBackgroundHighlight: #444;
+$navbarText: #eee;
+$navbarLinkColor: #eee;
+$navbarLinkColorHover: darken($navbarLinkColor, 35%);
+$navbarHeight: 30px;
+$baseFontSize: 13px;
+
+@import 'bootstrap';
+@import 'bootstrap-responsive';
+
+.navbar .brand {
+  color: #cc0000;
+}
+
+body .container {
+  width: 935px;
+}
+
+body .modal {
+  width: 500px;
+  
+  .modal-backdrop {
+    // background: none;
+    opacity: 0.2;
+  }
+  
+  .modal-body {
+    // height: 130px;
+  }
+}
+
+.well {
+  background-color: #fff;
+}

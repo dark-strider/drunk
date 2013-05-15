@@ -1,0 +1,16 @@
+h4 Отзывы пользователей о #{@place.name}
+br
+
+table class='table table-condensed'
+  - @reviews.each do |review|
+    tr class='#{review.impression}'
+      td = review.content
+      td = review.total_comments
+      td
+        = link_to 'Show', place_review_path(@place, review)
+        |  - 
+        = link_to 'Edit', edit_place_review_path(@place, review)
+        |  - 
+        = link_to 'Destroy', place_review_path(@place, review), method: :delete, confirm: 'Уверены..?'
+
+= link_to 'Оставить свой отзыв', new_place_review_path, class: 'btn btn-success'

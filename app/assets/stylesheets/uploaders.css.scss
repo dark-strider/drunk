@@ -1,0 +1,30 @@
+#toggle_uploader_comment {
+  margin-top: -12px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  float: right;
+}
+
+#uploader_comment {
+  width: 470px;
+  height: 210px;
+  display: none;
+  margin-top: -20px;
+}
+
+#toggle_uploader_album {
+  cursor: pointer;
+}
+
+#uploader_album {
+  display: none;
+}
+
+#toggle_uploader_review {
+  cursor: pointer;
+  margin-left: 275px;
+}
+
+#uploader_review {
+  display: none;
+}

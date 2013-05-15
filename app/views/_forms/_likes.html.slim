@@ -1,0 +1,12 @@
+- if current_user.liked?(model)
+  = unlike_for(model)
+- else
+  = like_for(model)
+
+- if model.likers.exists?
+  br
+  br
+  | Нравится [#{model.total_likers}]: 
+  - model.likers.each do |l|
+    tr
+      td = link_to (image_tag l.user.avatar_url(:small), title: l.user.name, class: 'avatar'), l.user

@@ -1,0 +1,13 @@
+h4 Мои сообщения (#{@user.total_create_messages} / #{@user.total_received_messages})
+br
+
+table class='table table-condensed'
+  - @messages.each do |message|
+    tr
+      td = message.content
+      td
+        = link_to 'Show', user_message_path(@user, message)
+        |  - 
+        = link_to 'Edit', edit_user_message_path(@user, message)
+        |  - 
+        = link_to 'Destroy', user_message_path(@user, message), method: :delete, confirm: 'Уверены..?'

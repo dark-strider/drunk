@@ -1,0 +1,5 @@
+- action_name == 'new' || action_name == 'create' ? a = 'Создать ' : a = 'Обновить '
+div class='form-actions'
+  = f.button :submit, a+t, disable_with:'Подождите...', class: 'btn-primary'
+  |  
+  = submit_tag 'Сбросить', type: :reset, class: 'btn btn-danger'

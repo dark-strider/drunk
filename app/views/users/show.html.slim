@@ -1,0 +1,43 @@
+div class='pull-right'
+  = image_tag @user.avatar_url(:large)
+
+- if current_user == @user
+  b [ Я ]
+h3 = @user.name
+
+- if current_user != @user
+  - if current_user.friend_with?(@user)
+    = link_to 'Поссориться', user_friend_path(@user), method: :delete, confirm: 'Уверены..?', class: 'btn btn-danger'
+  - else
+    = link_to 'Подружиться', new_user_friend_path(@user), class: 'btn btn-success'
+  |  
+  = link_to 'Написать сообщение', new_user_message_path(@user), class: 'btn btn-info'
+  |  
+  = link_to 'Пригласить ...', new_invite_path(whom: @user), class: 'btn btn-primary'
+
+br
+br
+
+= link_to "Фотоальбомы (#{@user.total_albums})", [@user, :albums], class: 'btn btn-info'
+= link_to "Комментарии (#{@user.total_comments})", '#', class: 'btn btn-info'
+= link_to "Отзывы (#{@user.total_reviews})", '#', class: 'btn btn-info'
+
+= link_to "Друзья (#{@user.total_unaccepted_friends}/#{@user.total_friends})", user_friends_path(@user), class: 'btn btn-info'
+/ br
+- if current_user == @user
+  = link_to "Сообщения (#{@user.total_messages})", user_messages_path(@user), class: 'btn btn-info'
+  / br
+  = link_to "Дринки (#{@user.total_events})", events_user_path(@user), class: 'btn btn-info'
+
+br
+br
+br
+br
+br
+br
+br
+br
+br
+br
+br
+br

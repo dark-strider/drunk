@@ -1,0 +1,11 @@
+ru:
+  errors:
+    messages:
+      extension_white_list_error: "Вы не можете загружать файлы с расширением %{extension}, допустимые типы: %{allowed_types}"
+      extension_black_list_error: "Вы не можете загружать файлы с расширением %{extension}, запрещенные типы: %{prohibited_types}"
+      carrierwave_processing_error: не были обработаны
+      carrierwave_integrity_error: недопустимый тип файла
+      carrierwave_download_error: ошибка при загрузке файла
+      mini_magick_processing_error: "Ошибка при обработке файла в MiniMagick, возможно это не изображение.? Ошибка: %{e}"
+      # rmagick_processing_error: "Failed to manipulate with rmagick, maybe it is not an image? Original Error: %{e}"
+      # mime_types_processing_error: "Failed to process file with MIME::Types, maybe not valid content-type? Original Error: %{e}"

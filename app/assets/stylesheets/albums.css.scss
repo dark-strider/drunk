@@ -1,0 +1,48 @@
+#albums_container {
+  overflow: hidden;
+
+  .album_preview {
+    position: relative;
+    padding: 9px 9px 0px 10px;
+    width: 280px;
+    height: 185px;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
+
+    img {
+      display: block;
+      width: 280px;
+      height: 185px;
+      overflow: hidden;
+      text-align: center;
+      background: #F1F1F1;
+    }
+      
+    .title {
+      background: #111;
+      position: absolute;
+      width: 280px;
+      height: 18px;
+      bottom: 0px;
+      padding: 3px 0px;
+      opacity: 0.6;
+      color: white;
+      text-align: center;
+      line-height: 14px;
+      font-weight: bolder;
+
+      .total {
+        float: right;
+        margin-right: 7px;
+      }
+    }
+  }
+}
+
+#album_title {
+  display: inline-block;
+  margin-right: 15px;
+  font-size: 20px;
+  font-weight: bolder;
+}

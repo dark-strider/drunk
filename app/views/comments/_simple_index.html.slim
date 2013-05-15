@@ -1,0 +1,24 @@
+div class='simple_comments_container'
+  div id='simple_comments_header'
+    == render 'comments/simple_form', photo: photo
+
+  | Всего [#{photo.total_comments}]
+
+  - photo.comments.desc(:created_at).each do |comment|
+    div class='simple_comment'
+      div class='pull-right'
+        i = link_to '', [:edit, comment], class: 'icon-edit'
+        i = link_to '', comment, method: :delete, confirm: 'Уверены..?', class: 'icon-remove'
+        
+      div class='avatar'
+        = image_tag comment.user.avatar_url(:normal)
+  
+      div class='body'
+        div class='header'
+          div class='user'
+            = link_to comment.user.name, user_path(comment.user.id)
+          div class='date'
+            = l comment.created_at.getlocal, format: :long
+        
+        div class='content'
+          = comment.content

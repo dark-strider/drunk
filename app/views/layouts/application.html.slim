@@ -1,0 +1,36 @@
+doctype html
+html
+  head
+    title drunk
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all'
+    /[ if lt IE 9 ]
+      script src='http://html5shiv.googlecode.com/svn/trunk/html5.js'
+
+  body
+    div class='container master-container'
+      == render 'layouts/header'
+
+      - flash.each do |name, msg|
+        div class="alert alert-#{name == :notice ? 'success' : 'error'}"
+          a class='close' data-dismiss='alert' ×
+          = msg
+
+      div class='well'
+        == yield
+      
+      / div class='well'
+       / = session if Rails.env.development?
+      / = debug(params) if Rails.env.development?
+ 
+  footer
+    = javascript_include_tag 'application'
+    == yield :scripts
+    
+    / Set for maps buttons manage.
+    - if current_user
+      javascript:
+        var current_user_id = '#{current_user.id}';
+    - else
+      javascript:
+        var current_user_id = null;

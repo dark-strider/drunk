@@ -1,0 +1,14 @@
+= simple_form_for @comment, html: { id:'form_for_simple_comment', onsubmit:'return validate_simple_comment(this)' } do |f|
+
+  - if photo
+    == render '_forms/commentable', f:f, commentable: photo
+
+  = f.input :content, as: :text,
+                      label: false,
+                      input_html: { rows: 3,
+                                    class: 'span3',
+                                    maxlength: 200,
+                                    placeholder: 'Написать комментарий ...' }
+
+  div id='submit_simple_comment'
+    = f.submit 'Отправить комментарий', class: 'btn btn-mini'

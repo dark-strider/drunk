@@ -1,0 +1,26 @@
+= simple_form_for [@place, @review], validate: true, html: { id: 'form_for_review', class: 'form-horizontal' } do |f|
+
+  = f.hidden_field :id, value: @review.id
+  
+  = f.input :impression, collection: Review::IMPRESSION.map{ |k,v| [v,k] },
+                         include_blank: false,
+                         validate: false
+  = f.input :content, as: :text,
+                      input_html: { rows: 5,
+                                    class: 'span3',
+                                    maxlength: 1000 }
+  a id='toggle_uploader_review'
+    = image_tag 'attach_image.png', title:'Добавить фото', size:'24x24'
+
+  div id='uploader_review'
+    p Ваш браузер не поддерживает: html5 и flash.
+
+  div class='form-actions'
+    = f.button :submit, class: 'hide'
+    |
+    div id='send_review' class='btn btn-primary' Отправить отзыв
+    |  
+    = submit_tag 'Сбросить', type: :reset, class: 'btn btn-danger'
+
+= content_for :scripts do
+  == render 'reviews/uploader'

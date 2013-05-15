@@ -1,0 +1,30 @@
+- bool = true if action_name == 'edit' || action_name == 'update'
+- is_event = true if bool || @event_id
+- action_name == 'new' || action_name == 'create' ? act = 'Отправить ' : act = 'Обновить '
+
+= simple_form_for @invite, validate: true, html: { class: 'form-horizontal' } do |f|
+
+  / Без секретного поля value не передается когда поле disabled.
+  = f.hidden_field :event_id, value: @event_id, id: 'hidden_invite_event_id'
+  = f.input :event_id, collection: @events, selected: @event_id,
+                       include_blank: true,
+                       disabled: is_event
+
+  = f.input :about, as: :text,
+                    input_html: { rows: 2,
+                                  class: 'span3' }
+  - unless bool
+    div id='set_friends' class='btn' Указать всех друзей
+    div id='set_fof' class='btn' Указать всех друзей и их друзей
+
+  = f.input :whom_id, collection: @users, selected: @whom_id,
+                      include_blank: true,
+                      disabled: bool,
+                      input_html: { multiple: true }
+  
+  div class='form-actions'
+    = f.button :submit, act+'приглашение', disable_with:'Подождите...', class: 'btn-primary'
+
+javascript:
+  var current_friends_ids = #{raw @current_friends_ids.to_json};
+  var current_fof_ids = #{raw @current_fof_ids.to_json};

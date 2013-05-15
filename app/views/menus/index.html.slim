@@ -1,0 +1,23 @@
+h4 Меню #{@place.name}
+br
+
+table class='table table-condensed'
+  - @menus.each do |menu|
+    tr
+      td 
+        a class='fancybox_menu_view' rel='gallery' href="#{menu.menu_url}"
+          = image_tag menu.menu_url(:normal)
+      td = menu.name
+      td = menu.price
+      td = menu.about
+      td = menu.section
+      td
+        = link_to 'Edit', edit_place_menu_path(@place, menu)
+        |  - 
+        = link_to 'Destroy', place_menu_path(@place, menu), method: :delete, confirm: 'Уверены..?'
+
+- if can? :create, @place.menus.build
+  = link_to 'Добавить пункт', new_place_menu_path, class: 'btn btn-success' 
+br
+br
+= link_to 'Назад к заведению', place_path(@place)

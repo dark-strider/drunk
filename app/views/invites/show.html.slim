@@ -1,0 +1,68 @@
+- event = @invite.event
+
+div class='pull-right'
+  = link_to 'Редактировать ', edit_invite_path(@invite) if can? :update, @invite
+  = link_to '- Отозвать', @invite, method: :delete, confirm: 'Уверены..?' if can? :destroy, @invite
+
+
+h4 Приглашение на #{event.name} от #{@invite.user.name}
+p = @invite.about
+-if can? :accept, @invite
+  = link_to 'Принять приглашение', invite_accept_path(@invite), class: 'btn btn-success'
+  |  
+  = link_to 'Отказаться', invite_refuse_path(@invite), class: 'btn btn-danger'
+
+br
+br
+
+h4 О #{event.name}
+
+| Статус: 
+b = Event::CONDITION[event.condition.to_sym]
+br
+| Где: 
+b = link_to event.place_name, place_path(event.place)
+br
+| Когда: 
+b = l event.begin_at.getlocal.to_date, format: :long
+|  ( #{l event.begin_at.getlocal, format: :time} - #{l event.end_at.getlocal, format: :time} )
+
+br
+| Организатор: 
+b = link_to event.user.name, user_path(event.user)
+
+br
+= "Skype: #{event.skype}"
+br
+= "Тел. #{event.phone}"
+
+br
+h5 Описание
+= event.about
+
+br
+br
+
+h5 Участники
+- if event.members.any?
+  table class='table table-condensed'
+    - event.members.each do |user|
+      tr
+        td= link_to user.name, user
+- else
+  | Пока никого нет...
+  br
+
+- if event.invites.any?
+  h5 Приглашены
+  table class='table table-condensed'
+    tr
+      td Пригласил
+      td Кого
+      td Статус
+    - event.invites.each do |invite|
+      tr
+        td= link_to invite.user.name, invite.user
+        td= link_to invite.whom.name, invite.whom
+        td= Invite::STATUS[invite.status.to_sym]
+

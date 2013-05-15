@@ -1,0 +1,40 @@
+- bool = true if action_name == 'new'
+- if @event.condition == 'over'
+  h5 Встреча уже окончена.
+- elsif @event.condition == 'canceled'
+  h5 Встреча отменена.
+- else
+  = simple_form_for @event, validate: true, html: { class: 'form-horizontal' } do |f|
+  
+    = f.input :place_id, collection: @places,
+                         include_blank: false
+
+    = f.input :condition, collection: Event::CONDITION.map{ |k,v| [v,k] },
+                          include_blank: false,
+                          disabled: bool,
+                          validate: false
+    = f.input :visibility, collection: Event::VISIBILITY.map{ |k,v| [v,k] },
+                           include_blank: false,
+                           validate: false
+    = f.input :joinable, collection: Event::JOINABLE.map{ |k,v| [v,k] },
+                         include_blank: false,
+                         validate: false
+    = f.input :inviteable, collection: Event::INVITEABLE.map{ |k,v| [v,k] },
+                           include_blank: false,
+                           validate: false
+
+    = f.input :begin_at, as: :date_picker,
+                         input_html: { id: 'begin',
+                                       class: 'span3' }
+    = f.input :end_at, as: :date_picker,
+                       input_html: { id: 'end',
+                                     class: 'span3' }
+
+    = f.input :name, input_html: { class: 'span3' }
+    = f.input :skype, input_html: { class: 'span3', maxlength: 25 }
+    = f.input :phone, input_html: { class: 'span3', maxlength: 25 }
+    = f.input :about, as: :text,
+                      input_html: { rows: 5,
+                                    class: 'span3',
+                                    maxlength: 2000 }
+    == render '_forms/submit', f:f, t:'дринк'

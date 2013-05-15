@@ -1,0 +1,25 @@
+h5 = link_to place.name, place, class: 'btn btn-small'
+div class='info'
+  | #{place.city}, #{place.street}
+  br
+  | Работает: 9:00-23:00 [ежедневно]
+
+- if live_events.any?
+  div class='live'
+    h5 Сейчас в #{place.name}
+  == render '_forms/accordion', events: live_events, i: 0
+
+- if ready_events.any?
+  div class='ready'
+    h5 Скоро в #{place.name}
+  == render '_forms/accordion', events: ready_events, i: 9999
+
+- if specials.any?
+  h5 Акции
+  div class='special_container'
+    - specials.each do |special|
+       div class='special'
+        div class='title'
+          = special.title
+        div class='content'
+          = special.content

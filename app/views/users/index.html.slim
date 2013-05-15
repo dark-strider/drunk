@@ -1,0 +1,7 @@
+h4 Пользователи
+br
+
+table class='table table-condensed'
+  - @users.each do |user|
+    tr
+      td = link_to user.name, user

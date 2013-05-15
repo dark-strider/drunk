@@ -1,0 +1,22 @@
+h4 Дринки
+
+div type='button' id='toggle_map_events' class='btn-primary btn-info' style='cursor:pointer; text-align:center;'
+  | Показать на карте
+
+== render '_forms/map', data: [], resource: :home, map_container: 'map_events_container', map_class: 'map_events', last: false
+ul id='markers_list' class='hide'
+br
+
+
+table class='table table-condensed'
+  - @events.each do |event|
+    tr
+      td = event.name
+      td
+        = link_to 'Show', event
+        |  - 
+        = link_to 'Edit', edit_event_path(event)
+        |  - 
+        = link_to 'Destroy', event, method: :delete, confirm: 'Уверены..?'
+
+= link_to 'Поставить дринк', new_event_path, class: 'btn btn-success'

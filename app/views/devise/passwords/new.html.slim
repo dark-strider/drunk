@@ -1,0 +1,12 @@
+h4 Забыли пароль.?
+
+= simple_form_for(resource, as: resource_name,
+                            url: password_path(resource_name),
+                            validate: true,
+                            html: { method: :post, class: 'form-horizontal' }) do |f|
+  = f.error_notification
+  br
+  = f.input :email, input_html: { required: true, autofocus: true, class: 'span5' }
+  == render '_forms/submit_static', f:f, t:'Отправить инструкцию для сброса пароля'
+
+== render '/devise/shared/links'

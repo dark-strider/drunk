@@ -1,0 +1,157 @@
+//- Invite dropdown -//
+// 
+#set_friends {
+  position: relative;
+  display: inline-block;
+  margin: 7px;
+  margin-left: 180px;
+}
+
+#set_fof {
+  margin-left: 0px;
+}
+
+
+//- Search dropdown -//
+//
+.navbar .search_container {
+  margin-top: 7px;
+  margin-bottom: -7px;
+}
+
+.select2-results {
+  max-height: 400px;
+}
+
+// users
+.users_select_format {
+  .select {
+    height: 34px;
+    
+    img {
+      float: left;
+      margin-left: 2px;
+      margin-right: 10px;
+      margin-top: 4px;
+      margin-bottom: 3px;
+    }
+  
+    .select_body {
+      .select_name {
+        font-size: 13px;
+        font-weight: bolder;
+      }
+      
+      .select_address {
+        margin-top: -6px;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+// places
+.places_select_format {
+  .select {
+    height: 53px;
+    
+    .select_rating {
+      height: 46px;
+      width: 40px;
+      float: left;
+      margin-left: 2px;
+      margin-right: 10px;
+      margin-top: 4px;
+      margin-bottom: 3px;
+      
+      font-size: 16px;
+      font-weight: bolder;
+      text-align: center;
+      line-height: 45px;
+      vertical-align: middle;
+      
+      background: #C02942;
+      color: #fff;
+      text-shadow:1px 1px 1px rgba(0,0,0,0.5);
+    }
+  
+    .select_body {
+      .select_name {
+        font-size: 13px;
+        font-weight: bolder;
+      }
+      
+      .select_address {
+        margin-top: 0px;
+        font-size: 12px;
+        line-height: 1.2;
+      }
+    }
+  }
+}
+
+// events
+.events_select_format {
+  .select {
+    height: 55px;
+    
+    .select_picture {
+      position: relative;
+      float: left;
+      height: 48px;
+      width: 49px;
+      margin-left: 2px;
+      margin-right: 8px;
+      margin-top: 4px;
+      margin-bottom: 3px;
+      
+      text-align: center;
+      font-size: 15px;
+      font-weight: bolder;
+      background: #C02942;
+      color: #fff;
+      text-shadow:1px 1px 1px rgba(0,0,0,0.5);
+
+      img {
+        margin-top: 2px;
+      }
+
+      .select_members {
+        position: absolute;
+        left:0;
+        right:0;
+        bottom:0;
+        margin-bottom: -1px;
+      }
+    }
+
+    .select_status {
+      font-size: 12px;
+      font-weight: bolder;
+    }
+
+    .select_body {
+      .select_name {
+        font-size: 13px;
+        font-weight: bolder;
+      }
+      
+      .select_place {
+        margin-top: 0px;
+        font-size: 12px;
+        line-height: 1.2;
+        font-weight: bolder;
+      }
+
+      .select_date {
+        line-height: 1.5;
+
+        .select_live {
+          font-size: 12px;
+          font-weight: bolder;
+          color: red;
+        }
+      }
+    }
+  }
+}

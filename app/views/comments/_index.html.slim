@@ -1,0 +1,55 @@
+div id='comments_container' class='well'
+  div id='comments_header'
+    h3 Комментарии [#{@commentable.total_comments}]:
+
+  button class='modal_comment' class='btn' onclick="document.getElementById('parent').value=null"
+    | Оставить свой комментарий ...
+
+  - @comments.each do |comment|
+    div class='comment'
+      div class='pull-right'
+        i = link_to '', [:edit, comment], class: 'icon-edit'
+        i = link_to '', comment, method: :delete, confirm: 'Уверены..?', class: 'icon-remove'
+
+      div class='avatar'
+        = image_tag comment.user.avatar_url(:normal)
+  
+      div class='body'
+        div class='header'
+          div class='user'
+            = link_to comment.user.name, user_path(comment.user.id)
+          div class='date'
+            = l comment.created_at.getlocal, format: :long
+
+            button class='modal_comment' class='btn btn-mini' parent_id="#{comment.id}" onclick="document.getElementById('parent').value=$(this).attr('parent_id');"
+              | Ответить
+            
+            == render '_forms/likes_button', model: comment
+        
+        div class='parent'
+          - if comment.parent_id
+            - parent = comment.parent
+            - if parent
+              div class='label'
+                | Ответ на 
+                a href='' class='toggle_answer' комментарий
+                |  пользователя 
+                = link_to parent.user.name, user_path(parent.user.id)
+              div class='answered_to'
+                = parent.content
+            - else
+              div class='label'
+                | Ответ на уже удаленный комментарий
+        
+        div class='content'
+          = comment.content
+
+        div class='attached'
+          - if comment.photos.any?
+            div id='photos_container'
+              == render partial: 'photos/photo', collection: comment.photos.desc(:created_at), locals: { size: :small }
+
+        - if comment.likers.exists?
+          == render '_forms/likers', model: comment
+
+== render 'comments/answer_modal'

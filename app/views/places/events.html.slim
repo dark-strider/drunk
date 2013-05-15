@@ -1,0 +1,14 @@
+h4 Дринки
+
+table class='table table-condensed'
+  - @events.each do |event|
+    tr
+      td = event.name
+      td
+        = link_to 'Show', event
+        |  - 
+        = link_to 'Edit', edit_event_path(event)
+        |  - 
+        = link_to 'Destroy', event, method: :delete, confirm: 'Уверены..?'
+
+= link_to 'Организовать попойку', new_event_path, class: 'btn btn-success'

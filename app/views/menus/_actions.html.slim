@@ -1,0 +1,5 @@
+= link_to 'Редактировать', edit_place_menu_path(@place, @menu) if can? :update, @menu
+|  - 
+= link_to 'Удалить', place_menu_path(@place, @menu), method: :delete, confirm: 'Уверены..?' if can? :destroy, @menu
+|  - 
+= link_to 'Назад', place_menus_path

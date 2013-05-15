@@ -1,0 +1,40 @@
+div class='pull-right'
+  == render 'actions'
+  br
+  br
+  == render '_forms/likes_dislikes', model: @place
+
+h3 = @place.name
+
+h5 О заведении
+= @place.about
+
+br
+br
+= link_to "Фотоальбомы [#{@place.total_albums}]", [@place, :albums], class: 'btn btn-info'
+
+br
+br
+= link_to 'Поставить дринк', new_event_path, class: 'btn btn-success'
+|  
+= link_to "Дринки [#{@place.total_events}]", events_place_path(@place), class: 'btn btn-info'
+br
+br
+
+= link_to 'Оставить свой отзыв', new_place_review_path(@place), class: 'btn btn-success'
+|  
+= link_to "Отзывы посетителей [#{@place.total_reviews}]", place_reviews_path(@place), class: 'btn btn-info'
+br
+br
+
+- if can? :create, @place.news.build
+  = link_to 'Добавить новость', new_place_news_path(@place), class: 'btn btn-success' 
+  |  
+= link_to "Новости [#{@place.total_news}]", place_news_index_path(@place), class: 'btn btn-info'
+br
+br
+
+- if can? :create, @place.menus.build
+  = link_to 'Добавить пункт в меню', new_place_menu_path(@place), class: 'btn btn-success'
+  |  
+= link_to 'Ознакомиться с меню', place_menus_path(@place), class: 'btn btn-info'

@@ -1,0 +1,17 @@
+= simple_form_for [@place, @news], validate: true, html: { class: 'form-horizontal' } do |f|
+
+  = f.input :category, collection: News::CATEGORIES,
+                       include_blank: false
+  
+  div id='is_active'
+    = f.input :is_active, as: :boolean
+
+  = f.input :title, input_html: { class: 'span3',
+                                  autofocus: true,
+                                  maxlength: 50 }
+  = f.input :content, as: :text,
+                      input_html: { rows: 5,
+                                    class: 'span3',
+                                    maxlength: 3000 }
+
+  == render '_forms/submit', f:f, t:'новость'

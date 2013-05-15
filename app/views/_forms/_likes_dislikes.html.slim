@@ -1,0 +1,28 @@
+- if current_user.liked?(model)
+  = unlike_for(model)
+- else
+  = like_for(model)
+|  
+- if current_user.disliked?(model)
+  = undislike_for(model)
+- else
+  = dislike_for(model)
+
+
+- if model.likers.exists?
+  br
+  br
+  | Позитив [#{model.total_likers}]: 
+  - model.likers.each do |l|
+    tr
+      td = link_to (image_tag l.user.avatar_url(:small), title: l.user.name, class: 'avatar'), l.user
+      |  
+
+- if model.dislikers.exists?
+  br
+  br
+  | Негатив [#{model.total_dislikers}]: 
+  - model.dislikers.each do |d|
+    tr
+      td = link_to (image_tag d.user.avatar_url(:small), title: d.user.name, class: 'avatar'), d.user
+      |  
